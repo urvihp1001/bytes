@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
           //mainaxis is for column format
           
           children: [
- SvgPicture.asset("assets/techsnap-modified.svg",
+ SvgPicture.asset("assets/bytes.svg",
             color: Colors.blueGrey[50],
             height:64),
             //txt field for email
@@ -92,8 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
             InkWell(
               onTap: loginUser,
               child:Container(
-             child:_isLoading?Center(child:const CircularProgressIndicator(color: primaryColor,)): Text("Sign In"),
-              width:double.infinity,
+             width:double.infinity,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical:12),
               decoration: ShapeDecoration(shape: RoundedRectangleBorder(
@@ -101,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 color:blueColor,
                 ),
+             child:_isLoading?Center(child:const CircularProgressIndicator(color: primaryColor,)): Text("Sign In"),
             ),
             ),
             const SizedBox(height:12),
@@ -109,18 +109,18 @@ class _LoginScreenState extends State<LoginScreen> {
            ),
            ),
             //login button
-            Flexible(child: Container(),flex:2),//for space
+            Flexible(flex:2, child: Container()),//for space
             //row for side by side-> sign up/ login 
             Row(mainAxisAlignment: MainAxisAlignment.center,
             children: [Container(
-              child: Text("Don't have an account? "),
-              padding: const EdgeInsets.symmetric(vertical: 8)
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text("Don't have an account? ")
             ),
             GestureDetector(
               onTap: navigateToSignup,
               child:Container(
-              child: Text("Sign up.", style:TextStyle(fontWeight: FontWeight.bold)),
-              padding: const EdgeInsets.symmetric(vertical: 8)
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              child: Text("Sign up.", style:TextStyle(fontWeight: FontWeight.bold))
             ),
             )
             ],

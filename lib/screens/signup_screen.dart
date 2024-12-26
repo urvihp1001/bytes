@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, sized_box_for_whitespace
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -109,17 +111,17 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    child: Text("Already have an account? "),
                     padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Text("Already have an account? "),
                   ),
                   GestureDetector(
                     onTap: navigateToLogin,
                     child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Text(
                         "Log in.",
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
                     ),
                   ),
                 ],
@@ -139,7 +141,7 @@ class _SignupScreenState extends State<SignupScreen> {
         mainAxisSize: MainAxisSize.min,
         children: [
           SvgPicture.asset(
-            "assets/techsnap-modified.svg",
+            "assets/bytes.svg",
             color: Colors.blueGrey[50],
             height: 64,
           ),
@@ -224,12 +226,6 @@ class _SignupScreenState extends State<SignupScreen> {
           InkWell(
             onTap: signUpUser,
             child: Container(
-              child: _isLoading
-                  ? Center(
-                      child: CircularProgressIndicator(
-                      color: primaryColor,
-                    ))
-                  : Text("Sign Up"),
               width: double.infinity,
               alignment: Alignment.center,
               padding: EdgeInsets.symmetric(vertical: 12),
@@ -239,6 +235,12 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
                 color: blueColor,
               ),
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(
+                      color: primaryColor,
+                    ))
+                  : Text("Sign Up"),
             ),
           ),
         ],
