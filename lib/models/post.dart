@@ -7,10 +7,12 @@ class Post{
   final String caption;
   final String postURL;
    final String postId;
+  final String url;
   final likes;
   final DateTime datePublished;
   final String profImage;
-  const Post({
+  const Post(
+    {required this.url,
     required this.username,
     required this.caption,
     required this.datePublished,
@@ -19,8 +21,8 @@ class Post{
     required this.postId,
     required this.category,
     required this.likes,
-    required this.uid,
-  });
+    required this.uid,}
+  );
   // convert user object required to JSON object (for storing in doc)-- serialisation
   Map<String,dynamic> toJson()=>{
     "username":username,
@@ -32,11 +34,13 @@ class Post{
     "category":category,
     "likes":likes,
     "datePublished":datePublished,
+    "url":url,
   };
   static Post fromSnap(DocumentSnapshot snap)
   {
     var snapshot=snap.data() as Map<String,dynamic>;
     return Post(
+      url: snapshot['url'],
       username: snapshot['username'],
       uid:snapshot['uid'],
       profImage: snapshot['profImage'],

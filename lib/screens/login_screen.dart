@@ -38,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String res= await AuthMethods().loginUser(email: emailController.text, password: passwordController.text);
   if(res=="success"){
 
-      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const ResponsiveLayout(webScreenLayout: webScreenLayout(), mobileScreenLayout: mobileScreenLayout())
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: mobileScreenLayout())
       )
       );
   
