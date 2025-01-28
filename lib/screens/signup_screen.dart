@@ -10,6 +10,7 @@ import 'package:tech_snap/responsive/mobile_screen_layout.dart';
 import 'package:tech_snap/responsive/responsive_layout_screen.dart';
 import 'package:tech_snap/responsive/web_screen_layout.dart';
 import 'package:tech_snap/screens/login_screen.dart';
+import 'package:tech_snap/screens/topic_selection.dart';
 import 'package:tech_snap/utils/colors.dart';
 import 'package:tech_snap/utils/utils.dart';
 import 'package:tech_snap/widgets/glass_morph.dart';
@@ -67,8 +68,8 @@ class _SignupScreenState extends State<SignupScreen> {
     } else {
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const ResponsiveLayout(
-              webScreenLayout: webScreenLayout(),
-              mobileScreenLayout: mobileScreenLayout())));
+              webScreenLayout: WebScreenLayout(),
+              mobileScreenLayout: TopicSelectionScreen())));
     }
   }
 

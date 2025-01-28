@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
             if(snapshot.hasData){
       ResponsiveLayout(
         mobileScreenLayout:mobileScreenLayout(),
-        webScreenLayout:webScreenLayout() ,);
+        webScreenLayout:WebScreenLayout() ,);
             }else if(snapshot.hasError){
               return Center(child:Text('${snapshot.error}'));
             }

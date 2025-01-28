@@ -9,7 +9,9 @@ import 'package:tech_snap/resources/firestore_methods.dart';
 import 'package:tech_snap/screens/comment_screen.dart';
 import 'package:tech_snap/utils/colors.dart';
 import 'package:tech_snap/widgets/like_animation.dart';
-
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
+//take launchurl from job
 class PostCard extends StatefulWidget {
   final snap;
   const PostCard({super.key, required this.snap});
@@ -37,8 +39,16 @@ class _PostCardState extends State<PostCard> {
     } catch (e) {
       print("Error updating likes: $e");
     }
+    
   }
-
+ _launchURL(String uri) async {
+   final Uri url = Uri.parse(uri);
+   if (!await launchUrl(url)) {
+     print("could not launch");
+        throw Exception('Could not launch $url');
+       
+    }
+}
   @override
   Widget build(BuildContext context) {
      final model.User user = Provider.of<Userprovider>(context).getUser;
@@ -81,35 +91,7 @@ String uid=user.uid;
                         ),
                       ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) => Dialog(
-                            child: ListView(
-                              padding: EdgeInsets.symmetric(vertical: 16),
-                              shrinkWrap: true,
-                              children: ['Delete']
-                                  .map(
-                                    (e) => InkWell(
-                                      onTap: ()async {
-                                        FirestoreMethods().deletePost(widget.snap['postId']);
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                        child: Text(e),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
-                          ),
-                        );
-                      },
-                      icon: Icon(Icons.more_vert),
-                    ),
-                  ],
+                  ]
                 ),
               ),
               // Image Section
@@ -176,18 +158,10 @@ String uid=user.uid;
                     ),
                   ),
                   IconButton(
-                    onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CommentsScreen())),
+                    onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CommentScreen(postId: snap['postId']))),
                     icon: Icon(Icons.comment_outlined, color: Colors.white),
                   ),
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: IconButton(
-                        icon: Icon(Icons.bookmark),
-                        onPressed: () {},
-                      ),
-                    ),
-                  ),
+                  
                 ],
               ),
               // Description and Comments Section
@@ -224,12 +198,47 @@ String uid=user.uid;
                         ),
                       ),
                     ),
+                     if (snap.containsKey('tldr') && snap['tldr'].isNotEmpty)
+                      Container(
+                        margin: EdgeInsets.only(top: 8),
+                        padding: EdgeInsets.symmetric(vertical: 4),
+                        child: Text(
+                          "tl;dr: ${snap['tldr']}",
+                          style: TextStyle(fontSize: 16, color: secondaryColor),
+                        ),
+                      ),
+                    // URL Clickable Area
+                  if (snap.containsKey('url') && snap['url'].isNotEmpty)
+  GestureDetector(
+    onTap: () {
+      final url = snap['url'];
+      if (url is String && Uri.tryParse(url)?.hasAbsolutePath == true) {
+        _launchURL(url);
+      } else {
+        print("Invalid URL format: $url");
+      }
+    },
+                    child: Container(
+                  margin: EdgeInsets.only(top: 8),
+                  padding: EdgeInsets.symmetric(vertical: 4),
+                  child: Text(
+                    "Learn more",
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
+                  ),
+                ),
+              
+            ),
+
                     InkWell(
-                      onTap: () {},
+                      onTap:  ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CommentScreen(postId: snap['postId'])),),
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 4),
                         child: Text(
-                          "View all 200 comments",
+                          "View all comments",
                           style: TextStyle(fontSize: 16, color: secondaryColor),
                         ),
                       ),
